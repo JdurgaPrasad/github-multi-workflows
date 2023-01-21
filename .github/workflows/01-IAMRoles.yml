@@ -5,40 +5,65 @@ on:
 jobs:
   Plan_Dev:
     if: github.ref == 'refs/heads/FeatureBranch1'
-    uses: RekhuGopal/gitreusableflows/.github/workflows/aws_tf_plan.yml@FeatureBranch1
+    uses: JdurgaPrasad/github-multi-workflows/.github/workflows/aws_tf_plan.yml@FeatureBranch1
     with:
       path: IAMRoles
       tf_vars_file: dev.tfvars
       gh_environment: dev
+    #secrets:
+    #  cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
     secrets:
-      cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    #permissions:
+     # id-token: write
+     # contents: read
 
   Deploy_Dev:
     needs: Plan_Dev
-    uses: RekhuGopal/gitreusableflows/.github/workflows/aws_tf_appy.yml@FeatureBranch1
+    uses: JdurgaPrasad/github-multi-workflows/.github/workflows/aws_tf_appy.yml@FeatureBranch1
     with:
       path: IAMRoles
       tf_vars_file: dev.tfvars
       gh_environment: dev
+    #secrets:
+    #  cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
     secrets:
-      cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    #permissions:
+     # id-token: write
+     # contents: read
 
   Plan_Uat:
     if: github.ref == 'refs/heads/main'
-    uses: RekhuGopal/gitreusableflows/.github/workflows/aws_tf_plan.yml@main
+    uses: JdurgaPrasad/github-multi-workflows/.github/workflows/aws_tf_plan.yml@main
     with:
       path: IAMRoles
       tf_vars_file: uat.tfvars
       gh_environment: uat
+    #secrets:
+    #  cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
     secrets:
-      cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    #permissions:
+     # id-token: write
+     # contents: read
 
   Deploy_Uat:
     needs: Plan_Uat
-    uses: RekhuGopal/gitreusableflows/.github/workflows/aws_tf_appy.yml@main
+    uses: JdurgaPrasad/github-multi-workflows/.github/workflows/aws_tf_appy.yml@main
     with:
       path: IAMRoles
       tf_vars_file: uat.tfvars
       gh_environment: uat
+    
+    #secrets:
+     # cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
     secrets:
-      cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    #permissions:
+     # id-token: write
+     # contents: read
